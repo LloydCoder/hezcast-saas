@@ -99,8 +99,8 @@ export default function GeneratePage() {
       setJobs(prev => [newJob, ...prev]);
       notify(`⚡ Job submitted — ${res.job_id}`);
       if (mode === "topic") setTopic(""); else setUrl("");
-    } catch (e: any) {
-      notify(`❌ ${e.message}`);
+    } catch (e: unknown) {
+      notify(`❌ ${e instanceof Error ? e.message : "Request failed"}`);
     } finally { setLoading(false); }
   };
 
