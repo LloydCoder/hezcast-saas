@@ -25,7 +25,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const path      = usePathname();
   const [online, setOnline]   = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
-  const [jobs, setJobs]       = useState(0);
 
   useEffect(() => {
     api.health().then(() => setOnline(true)).catch(() => setOnline(false));
