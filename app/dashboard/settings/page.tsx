@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import { api, type HealthResponse } from "@/lib/api";
 
-type TelegramInfo = { configured: boolean; chat_id: string | null; bot_token_set?: boolean; chat_id_set?: boolean };
-type WebhookResult = { ok: boolean; webhook_url?: string };
+type TelegramInfo = { configured: boolean; chat_id?: string | null; bot_token_set?: boolean; chat_id_set?: boolean };
+type WebhookResult = { ok: boolean; webhook_url?: string; error?: string };
 
 export default function SettingsPage() {
   const [health,     setHealth]     = useState<HealthResponse | null>(null);
