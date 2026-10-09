@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
+type DemoLine =
+  | { type: "you" | "bot" | "info" | "hint" | "tag"; text: string; color?: string }
+  | { type: "hook"; n: number; text: string; hl: string };
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-ink">
@@ -84,7 +88,7 @@ export default function LandingPage() {
             <span className="flex-1 text-center font-mono text-[11px] text-dim tracking-[0.08em]">HezCast Bot — Telegram</span>
           </div>
           <div className="p-6 font-mono text-[13px] leading-[1.8]">
-            {[
+            {([
               { type: "you",  text: "/generate GiftMode forgot birthday gift last minute" },
               { type: "bot",  text: "⚡ Job started — 4f7a2c1e", color: "text-emerald" },
               { type: "info", text: "Generating 5 hook variants..." },
@@ -97,12 +101,12 @@ export default function LandingPage() {
               { type: "bot",  text: "🔄 Rendering hook 2... Script → Voice → Clips → QA", color: "text-amber" },
               { type: "bot",  text: "✅ Video ready! [final.mp4 · 24.3s · 1080×1920]", color: "text-emerald" },
               { type: "tag",  text: "#GiftMode #GiftIdeas #BirthdayGift" },
-            ].map((line, i) => (
+            ] satisfies DemoLine[]).map((line, i) => (
               <div key={i} className="flex items-baseline gap-2">
                 {line.type === "you"  && <><span className="text-cyan flex-shrink-0">you →</span><span className="text-snow">{line.text}</span></>}
-                {line.type === "bot"  && <><span className="text-muted flex-shrink-0">bot →</span><span className={(line as any).color}>{line.text}</span></>}
+                {line.type === "bot"  && <><span className="text-muted flex-shrink-0">bot →</span><span className={line.color}>{line.text}</span></>}
                 {line.type === "info" && <span className="text-dim pl-5">{line.text}</span>}
-                {line.type === "hook" && <><span className="text-cyan pl-5">{(line as any).n}.</span><span className="text-txt">{line.text} <span className="text-pink font-semibold">{(line as any).hl}...</span></span></>}
+                {line.type === "hook" && <><span className="text-cyan pl-5">{line.n}.</span><span className="text-txt">{line.text} <span className="text-pink font-semibold">{line.hl}...</span></span></>}
                 {line.type === "hint" && <span className="text-muted pl-5 italic">{line.text}</span>}
                 {line.type === "tag"  && <span className="text-cyan pl-5">{line.text}</span>}
               </div>
