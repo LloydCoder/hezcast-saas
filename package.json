@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "verify:security-backports": "node tests/verify-braces-depth-guard.cjs"
   },
   "dependencies": {
     "next": "15.5.27",
@@ -29,6 +30,12 @@
     "postcss": "^8.4.47",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.13.0",
-    "eslint-config-next": "15.5.27"
+    "eslint-config-next": "15.5.27",
+    "braces": "file:vendor/braces"
+  },
+  "overrides": {
+    "braces": "$braces",
+    "postcss": "^8.5.23",
+    "postcss-selector-parser": "^7.1.6"
   }
 }
