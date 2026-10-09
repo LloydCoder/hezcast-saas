@@ -99,8 +99,8 @@ export default function GeneratePage() {
       setJobs(prev => [newJob, ...prev]);
       notify(`⚡ Job submitted — ${res.job_id}`);
       if (mode === "topic") setTopic(""); else setUrl("");
-    } catch (e: any) {
-      notify(`❌ ${e.message}`);
+    } catch (e: unknown) {
+      notify(`❌ ${e instanceof Error ? e.message : "Request failed"}`);
     } finally { setLoading(false); }
   };
 
@@ -165,7 +165,7 @@ export default function GeneratePage() {
           {/* LLM chain indicator */}
           <div className="flex items-center gap-2 bg-ink border border-border rounded-lg px-3.5 py-2.5 mb-4">
             <span className="font-mono text-[10px] text-muted uppercase tracking-[0.1em]">LLM Chain:</span>
-            {[["Claude Sonnet","primary"],["GPT-4o","standby"],["Ollama","standby"]].map(([name, state], i) => (
+            {[["Claude Sonnet","primary"],["GPT-4o","standby"],["Ollama","standby"]].map(([name], i) => (
               <div key={name} className="flex items-center gap-1.5">
                 <span className={`text-[11px] px-2 py-0.5 rounded font-mono font-semibold border ${i === 0 ? "text-cyan border-cyan/30 bg-cyan/[0.06]" : "text-muted border-border bg-ink3"}`}>
                   {i === 0 && "● "}{name}

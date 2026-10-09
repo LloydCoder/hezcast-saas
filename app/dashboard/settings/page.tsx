@@ -1,13 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import { api } from "@/lib/api";
+import { api, type HealthResponse } from "@/lib/api";
+
+type TelegramInfo = { configured: boolean; chat_id?: string | null; bot_token_set?: boolean; chat_id_set?: boolean };
+type WebhookResult = { ok: boolean; webhook_url?: string; error?: string };
 
 export default function SettingsPage() {
-  const [health,     setHealth]     = useState<any>(null);
-  const [tgInfo,     setTgInfo]     = useState<any>(null);
+  const [health,     setHealth]     = useState<HealthResponse | null>(null);
+  const [tgInfo,     setTgInfo]     = useState<TelegramInfo | null>(null);
   const [domain,     setDomain]     = useState("cast.tinlance.com");
   const [registering,setRegistering]= useState(false);
-  const [tgResult,   setTgResult]   = useState<any>(null);
+  const [tgResult,   setTgResult]   = useState<WebhookResult | null>(null);
   const [toast,      setToast]      = useState<string | null>(null);
 
   const notify = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 4000); };
@@ -56,7 +59,7 @@ export default function SettingsPage() {
           </div>
           <div className="px-5">
             <Row label="HezCast Engine" value="v2.0.0" color="text-cyan" />
-            <Row label="Tests Passing"  value="453 / 453" color="text-emerald" />
+            <Row label="Engine Tests"    value="579 / 579" color="text-emerald" />
             <Row label="Core Modules"   value="22 modules" />
             <Row label="API Status"     value={health ? "Online ✓" : "Offline ✗"} color={health ? "text-emerald" : "text-danger"} />
             <Row label="API Version"    value={health?.version || "—"} />

@@ -25,7 +25,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const path      = usePathname();
   const [online, setOnline]   = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
-  const [jobs, setJobs]       = useState(0);
 
   useEffect(() => {
     api.health().then(() => setOnline(true)).catch(() => setOnline(false));
@@ -77,7 +76,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="font-mono text-[10px] text-muted leading-relaxed">
               <div>HezCast v2.0</div>
               <div className="text-[9px]">by Tinlance Ltd</div>
-              <Link href="https://github.com/Tinlance/hezcast-engine" className="text-muted hover:text-cyan transition-colors no-underline">⭐ GitHub</Link>
+              <Link href="https://github.com/LloydCoder/hezcast-engine" className="text-muted hover:text-cyan transition-colors no-underline">⭐ GitHub</Link>
             </div>
           </div>
         </nav>

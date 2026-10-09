@@ -1,0 +1,48 @@
+name: HezCast SaaS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hezcast-saas-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Type check, lint, and production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify security backports
+        run: npm run verify:security-backports
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+      - name: Type check
+        run: npm run type-check
+      - name: Lint
+        env:
+          ESLINT_USE_FLAT_CONFIG: "false"
+        run: npm run lint
+      - name: Production build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuZXhhbXBsZS5jb20k
+          CLERK_SECRET_KEY: sk_test_ci_placeholder
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:8503
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+        run: npm run build

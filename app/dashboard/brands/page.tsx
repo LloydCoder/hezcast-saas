@@ -1,10 +1,6 @@
 "use client";
 import { useState } from "react";
 
-const BRAND_COL: Record<string, string> = {
-  GiftMode: "#FF6B9D", Tinlance: "#00D4FF",
-  WebTemify: "#7C3AED", HezCast: "#00D4FF",
-};
 const BRAND_EMOJI: Record<string, string> = {
   GiftMode: "🎁", Tinlance: "🔒", WebTemify: "⚡", HezCast: "📡",
 };
@@ -16,7 +12,7 @@ const DEFAULT_BRANDS = [
   { name: "HezCast",   tone: "founder_energy",   audience: "Founders & agencies",   hooks: 5, duration: 25, cta: "Try HezCast free → cast.tinlance.com",  color: "#00D4FF", persona: "Lloyd", videos: 8  },
 ];
 
-function BrandCard({ brand, onEdit }: { brand: typeof DEFAULT_BRANDS[0]; onEdit: (b: typeof DEFAULT_BRANDS[0]) => void }) {
+function BrandCard({ brand }: { brand: typeof DEFAULT_BRANDS[0] }) {
   return (
     <div className="bg-ink2 border border-border rounded-xl overflow-hidden hover:-translate-y-0.5 transition-all group"
       style={{ borderTopColor: brand.color }}>
@@ -30,10 +26,6 @@ function BrandCard({ brand, onEdit }: { brand: typeof DEFAULT_BRANDS[0]; onEdit:
               <div className="font-mono text-[10px] tracking-[0.1em] uppercase text-muted mt-0.5">{brand.tone}</div>
             </div>
           </div>
-          <button onClick={() => onEdit(brand)}
-            className="px-3 py-1.5 border border-border2 text-[12px] font-semibold text-dim hover:text-bright hover:border-cyan transition-all rounded-lg opacity-0 group-hover:opacity-100">
-            Edit
-          </button>
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-4">
@@ -70,7 +62,7 @@ function BrandCard({ brand, onEdit }: { brand: typeof DEFAULT_BRANDS[0]; onEdit:
   );
 }
 
-function AddBrandModal({ onClose }: { onClose: () => void }) {
+function AddBrandModal({ onClose, onCreated }: { onClose: () => void; onCreated: (brand: typeof DEFAULT_BRANDS[number]) => void }) {
   const [form, setForm] = useState({
     name: "", tone: "emotional", audience: "", cta: "",
     subtitle_color: "#00D4FF", hook_variants: 5, video_duration: 25,
@@ -86,7 +78,10 @@ function AddBrandModal({ onClose }: { onClose: () => void }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (res.ok) onClose();
+      if (res.ok) {
+        onCreated({ name: form.name.trim(), tone: form.tone, audience: form.audience, hooks: form.hook_variants, duration: form.video_duration, cta: form.cta, color: form.subtitle_color, persona: form.name.trim(), videos: 0 });
+        onClose();
+      }
     } catch {}
     finally { setSaving(false); }
   };
@@ -153,7 +148,6 @@ function AddBrandModal({ onClose }: { onClose: () => void }) {
 export default function BrandsPage() {
   const [brands,      setBrands]     = useState(DEFAULT_BRANDS);
   const [showAdd,     setShowAdd]    = useState(false);
-  const [editBrand,   setEditBrand]  = useState<typeof DEFAULT_BRANDS[0] | null>(null);
 
   return (
     <div className="flex flex-col gap-6">
@@ -171,7 +165,7 @@ export default function BrandsPage() {
 
       {/* Brand grid */}
       <div className="grid grid-cols-2 gap-4">
-        {brands.map(b => <BrandCard key={b.name} brand={b} onEdit={setEditBrand} />)}
+        {brands.map(b => <BrandCard key={b.name} brand={b} />)}
         {/* Empty slot */}
         {brands.length < 5 && (
           <button onClick={() => setShowAdd(true)}
@@ -184,7 +178,7 @@ export default function BrandsPage() {
       </div>
 
       {/* Add modal */}
-      {showAdd && <AddBrandModal onClose={() => setShowAdd(false)} />}
+      {showAdd && <AddBrandModal onClose={() => setShowAdd(false)} onCreated={brand => setBrands(prev => [...prev, brand])} />}
     </div>
   );
 }
