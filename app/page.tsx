@@ -15,7 +15,7 @@ export default function LandingPage() {
           <span className="font-display text-[22px] tracking-[0.06em] text-snow">Hez<span className="text-cyan">Cast</span></span>
         </Link>
         <nav className="hidden md:flex items-center gap-8">
-          {[["#how-it-works","How it works"],["#features","Features"],["/pricing","Pricing"],["https://github.com/Tinlance/hezcast-engine","GitHub"]].map(([href, label]) => (
+          {[["#how-it-works","How it works"],["#features","Features"],["/pricing","Pricing"],["https://github.com/LloydCoder/hezcast-engine","GitHub"]].map(([href, label]) => (
             <Link key={href} href={href} className="text-[13px] font-medium text-dim hover:text-bright transition-colors no-underline">{label}</Link>
           ))}
         </nav>
@@ -67,7 +67,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-center gap-12 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             {[
               { num: "22", label: "Modules Built", color: "text-cyan" },
-              { num: "453", label: "Tests Passing", color: "text-snow" },
+              { num: "579", label: "Engine Tests Passing", color: "text-snow" },
               { num: "4", label: "Brands", color: "text-pink" },
               { num: "$0", label: "To Start", color: "text-emerald" },
             ].map(({ num, label, color }, i) => (
@@ -191,7 +191,7 @@ export default function LandingPage() {
           <p className="text-[13px] text-dim leading-relaxed max-w-[180px]">AI Content Broadcasting System by Tinlance Limited. God strengthens.</p>
         </div>
         {[
-          { title: "Product", links: [["#how-it-works","How it works"],["#features","Features"],["/pricing","Pricing"],["https://github.com/Tinlance/hezcast-engine","GitHub"]] },
+          { title: "Product", links: [["#how-it-works","How it works"],["#features","Features"],["/pricing","Pricing"],["https://github.com/LloydCoder/hezcast-engine","GitHub"]] },
           { title: "Company", links: [["https://tinlance.com","Tinlance"],["https://giftmode.app","GiftMode"],["https://webtemify.com","WebTemify"],["https://kalevioai.com","KalevioAI"]] },
           { title: "Legal",   links: [["/privacy","Privacy"],["/terms","Terms"],["/license","Apache 2.0"]] },
         ].map(({ title, links }) => (
