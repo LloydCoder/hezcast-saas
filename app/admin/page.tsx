@@ -1,5 +1,3 @@
-import { api } from "@/lib/api";
-
 // Mock tenant data — replace with DB query in production
 const MOCK_TENANTS = [
   { id: "t001", email: "user@giftmode.app",   plan: "pro",     credits: 42, jobs: 18, created: "2026-05-01" },
