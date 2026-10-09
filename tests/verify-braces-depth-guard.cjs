@@ -1,7 +1,7 @@
 const assert = require("node:assert/strict");
 const braces = require("braces");
 
-assert.deepEqual(braces("{a,b}"), ["a", "b"]);
+assert.deepEqual(braces("{a,b}", { expand: true }), ["a", "b"]);
 assert.equal(braces.compile("{a,b}"), "(a|b)");
 
 const deepBraces = "{".repeat(101) + "a,b" + "}".repeat(101);
