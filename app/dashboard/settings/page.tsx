@@ -59,7 +59,7 @@ export default function SettingsPage() {
           </div>
           <div className="px-5">
             <Row label="HezCast Engine" value="v2.0.0" color="text-cyan" />
-            <Row label="Tests Passing"  value="453 / 453" color="text-emerald" />
+            <Row label="Engine Tests"    value="579 / 579" color="text-emerald" />
             <Row label="Core Modules"   value="22 modules" />
             <Row label="API Status"     value={health ? "Online ✓" : "Offline ✗"} color={health ? "text-emerald" : "text-danger"} />
             <Row label="API Version"    value={health?.version || "—"} />
