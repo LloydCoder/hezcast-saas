@@ -62,7 +62,7 @@ function BrandCard({ brand }: { brand: typeof DEFAULT_BRANDS[0] }) {
   );
 }
 
-function AddBrandModal({ onClose }: { onClose: () => void }) {
+function AddBrandModal({ onClose, onCreated }: { onClose: () => void; onCreated: (brand: typeof DEFAULT_BRANDS[number]) => void }) {
   const [form, setForm] = useState({
     name: "", tone: "emotional", audience: "", cta: "",
     subtitle_color: "#00D4FF", hook_variants: 5, video_duration: 25,
@@ -78,7 +78,10 @@ function AddBrandModal({ onClose }: { onClose: () => void }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (res.ok) onClose();
+      if (res.ok) {
+        onCreated({ name: form.name.trim(), tone: form.tone, audience: form.audience, hooks: form.hook_variants, duration: form.video_duration, cta: form.cta, color: form.subtitle_color, persona: form.name.trim(), videos: 0 });
+        onClose();
+      }
     } catch {}
     finally { setSaving(false); }
   };
@@ -175,7 +178,7 @@ export default function BrandsPage() {
       </div>
 
       {/* Add modal */}
-      {showAdd && <AddBrandModal onClose={() => setShowAdd(false)} />}
+      {showAdd && <AddBrandModal onClose={() => setShowAdd(false)} onCreated={brand => setBrands(prev => [...prev, brand])} />}
     </div>
   );
 }
